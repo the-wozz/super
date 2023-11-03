@@ -7093,8 +7093,63 @@ fi
 
 # Set language strings for dialogs and notifications.
 set_display_strings_language() {
+
+
+### Woz Custom Display Variables ###
+# UPDATED Variables for SUPERMAN 4.0 ! | 11/1/23
+# Use the line below for notification line(s):
+# $dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease Install updates as soon as possible. 
+
+# Variable to display macOS updates & recommended updates
+dialogUpdates=$(
+# checks if there is a minor macos update available
+if [[ "${asu_macos_minor_update_available}" == "TRUE" ]] && [[ "${macos_major_upgrade_version_major_target}" == "FALSE" ]]; then
+    macOSUpdates=$(echo -e • "${asu_macos_minor_update_title}")
+    echo -e "**macOS Update Available** :\n"
+	echo -e "$macOSUpdates"
+	echo -e ""
+else
+	echo -e ""
+fi
+# checks if there is any recommended updates available
+if [[ "${asu_non_system_update_available}" == "TRUE" ]]; then
+	softwareupdateSED=$(echo "${asu_non_system_update_titles_array[@]}" | sed 's/^/• /')
+    echo -e "**Software Update(s) Available** :\n"
+	echo -e "$softwareupdateSED"
+fi
+# Display nothing if no updates are available
+if [[ "${asu_macos_minor_update_available}" == "FALSE" ]] && [[ "${asu_non_system_update_available}" == "FALSE" ]]; then
+    echo ""
+fi
+)
+
+# Variable to display macOS UPGRADES
+dialogUpgrade=$(
+if [[ "${macos_major_upgrade_version_major_target}" != "FALSE" ]]; then
+	echo -e "**macOS Upgrade Available** :  \n"
+		if [[ "${macos_version_major}" -ge 12 ]]; then
+		    echo -e "• ${asu_macos_major_upgrade_title_target}"
+            ${asu_macos_major_upgrade_label_target}
+		elif [[ "${macos_version_major}" == 11 ]]; then
+			echo -e "• ${macos_installer_marketing_name_target} ${macos_installer_version_target}"
+		fi
+else
+# Display nothing if upgrade is not available
+    echo ""
+fi
+)
+
+# Check if Upgrade or update process is being used to determine if restart is required
+#if [[ -n "${install_macos_mdm_workflow_type}" ]]; then
+if [[ "${asu_macos_minor_update_available}" == "TRUE" ]] || [[ "${macos_major_upgrade_version_major_target}" != "FALSE" ]]; then
+    restartRequired="Yes"
+else
+    restartRequired="No"
+fi
+### End Woz Custom Settings ###
+
 #### Langauge for the restart button in dialogs. Note that for deadline dialogs this is the default button.
-display_string_restart_button="Restart"
+display_string_restart_button="Install"
 
 #### Language for the deferral button in dialogs.
 display_string_deferral_button="Defer"
@@ -7204,13 +7259,13 @@ display_string_power_required_deadline_days_body="You have deferred the maximum 
 display_string_power_required_deadline_date_body="The deferment deadline of ${display_string_deadline_date} has passed.\n\nYou must connect this computer to a power supply in order to install the required macOS update."
 
 #### Language for dialog_restart_or_defer(), an interactive dialog giving the user a choice to defer the update or restart.
-display_string_restart_or_defer_title="${display_string_workflow_title} Requires Restart"
+display_string_restart_or_defer_title="macOS Updates Ready for Install"
 display_string_restart_or_defer_timeout="Please make selection in"
-display_string_restart_or_defer_menu_title="Defer software update for:"
-display_string_restart_or_defer_default_body="• No deadline date and unlimited deferrals.\n"
-display_string_restart_or_defer_date_body="• Deferral available until ${display_string_deadline}.\n"
-display_string_restart_or_defer_count_body="• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
-display_string_restart_or_defer_date_count_body="• Deferral available until ${display_string_deadline}.\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
+display_string_restart_or_defer_menu_title="Defer update(s) for:"
+display_string_restart_or_defer_default_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible."
+display_string_restart_or_defer_date_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible. \n\n• Deferral available until ${display_string_deadline}\n"
+display_string_restart_or_defer_count_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible. \n\n• ${display_string_deadline_count} deferrals remaining\n"
+display_string_restart_or_defer_date_count_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible. \n\n• Deferral available until ${display_string_deadline}\n\n• ${display_string_deadline_count} deferrals remaining\n"
 
 #### Language for dialog_soft_deadline(), an interactive dialog when a soft deadline has passed, giving the user only one button to continue the workflow.
 display_string_soft_deadline_title="${display_string_workflow_title} Requires Restart"
