@@ -402,7 +402,7 @@ TIMEOUT_INSTALLER_WORKFLOW_SECONDS=600
 readonly TIMEOUT_INSTALLER_DOWNLOAD_SECONDS
 
 # The number of seconds to timeout MDM commands if no response is reported.
-TIMEOUT_MDM_COMMAND_SECONDS=300
+TIMEOUT_MDM_COMMAND_SECONDS=600
 readonly TIMEOUT_MDM_COMMAND_SECONDS
 
 # The number of seconds to timeout the MDM download/prepare workflow if no progress is reported.
@@ -7090,7 +7090,6 @@ fi
 # Set language strings for dialogs and notifications.
 set_display_strings_language() {
 
-
 ### Woz Custom Display Variables ###
 # UPDATED Variables for SUPERMAN 4.0 ! | 11/1/23
 # Use the line below for notification line(s):
@@ -7255,9 +7254,9 @@ display_string_power_required_deadline_days_body="You have deferred the maximum 
 display_string_power_required_deadline_date_body="The deferment deadline of ${display_string_deadline_date} has passed.\n\nYou must connect this computer to a power supply in order to install the required macOS update."
 
 #### Language for dialog_restart_or_defer(), an interactive dialog giving the user a choice to defer the update or restart.
-display_string_restart_or_defer_title="macOS Updates Ready for Install"
+display_string_restart_or_defer_title="${display_string_workflow_title} Requires Restart"
 display_string_restart_or_defer_timeout="Please make selection in"
-display_string_restart_or_defer_menu_title="Defer update(s) for:"
+display_string_restart_or_defer_menu_title="Defer update for:"
 display_string_restart_or_defer_default_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible."
 display_string_restart_or_defer_date_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible. \n\n• Deferral available until ${display_string_deadline}\n"
 display_string_restart_or_defer_count_body="$dialogUpdates $dialogUpgrade  \n\nRestart Required? : **$restartRequired**  \n\nPlease install updates as soon as possible. \n\n• ${display_string_deadline_count} deferrals remaining\n"
