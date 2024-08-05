@@ -8051,7 +8051,7 @@ set_display_strings_language() {
 							#log_super "IBM NOTIFIER: Showing LOCAL Installer: [${macos_installer_title} ${macos_installer_version}]."
 					fi
 
-				# Woz custom CVE setting >:) 8/2/24
+				# custom CVE setting 8/2/24
 					# curl the latest SOFA release for total CVEs
 				jsonCVE=$(curl -s https://sofafeed.macadmins.io/v1/macos_data_feed.json | plutil -extract OSVersions.0.Latest.UniqueCVEsCount raw -)
 					# curl the latest SOFA release of release date
@@ -8075,14 +8075,13 @@ set_display_strings_language() {
 			fi 
 			)
 
-
-        	# checks if there is any 'non-system' updates available
+        	# checks if there is any 'non-system' [Safari, XCode, etc] updates available
 			otherUpdates=$(
 				if [[ "${non_system_msu_targets}" == "TRUE" ]]; then
-					#softwareupdateSED=$(echo "${asu_non_system_update_titles_array[@]}" | sed 's/^/• /')
-					updateTitles=($non_system_msu_titles_array)
 					echo -e "**Non-system Update(s) Available** :\n"
-					echo -e "$updateTitles"
+						for i in "${non_system_msu_titles_array[@]}"; do
+							echo -e "• $i"
+						done
 				else
 					echo ""
 				fi
