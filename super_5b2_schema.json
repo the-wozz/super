@@ -1,6 +1,6 @@
 {
-  "title": "SUPER Schema 5b2",
-  "description": "Schema Preference settings for S.U.P.E.R.M.A.N. update script [com.macjutsu.super]. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Last update: 8/5/24/.",
+  "title": "SUPER Schema 5b2  [com.macjutsu.super]",
+  "description": "Schema Preference settings for S.U.P.E.R.M.A.N. update script. This will addtional support macOS 15; Sequoia (along with previous macOS' to 11. This has been modified by Zachary 'Woznicki'. Last update: 8/7/24/.",
   "__preferencedomain": "com.macjutsu.super",
   "options": {
     "remove_empty_properties": true
@@ -439,5 +439,6 @@
       "type": "boolean"
     }
   }
+}
 }
 }
