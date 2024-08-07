@@ -1,6 +1,6 @@
 {
-  "title": "SUPER Schema 5b2  [com.macjutsu.super]",
-  "description": "Schema Preference settings for S.U.P.E.R.M.A.N. update script. This will addtional support macOS 15; Sequoia (along with previous macOS' to 11. This has been modified by Zachary 'Woznicki'. Last update: 8/7/24/.",
+  "title": "SUPER Schema 5b2",
+  "description": "Schema Preference settings for S.U.P.E.R.M.A.N. update script [com.macjutsu.super]. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Last update: 8/5/24/.",
   "__preferencedomain": "com.macjutsu.super",
   "options": {
     "remove_empty_properties": true
@@ -248,10 +248,10 @@
     "DisplaySilently": {
       "title": "Display Dialogs Silently",
       "description": "When enabled, the system alert sound is suppressed when displaying dialogs.",
-      "type": "string",
+      "type": "boolean",
       "options": {
         "inputAttributes": {
-          "placeholder": "0"
+          "placeholder": false
         }
       }
     },
@@ -440,5 +440,5 @@
     }
   }
 }
-}
+  }
 }
