@@ -8053,7 +8053,8 @@ set_display_strings_language() {
 
 				# custom CVE setting 8/2/24
 					# curl the latest SOFA release for total CVEs
-				jsonCVE=$(curl -s https://sofafeed.macadmins.io/v1/macos_data_feed.json | plutil -extract OSVersions.0.Latest.UniqueCVEsCount raw -)
+					# only works with Sonoma currently
+				jsonCVE=$(curl -s https://sofafeed.macadmins.io/v1/macos_data_feed.json | plutil -extract OSVersions.1.Latest.UniqueCVEsCount raw -)
 					# curl the latest SOFA release of release date
 				jsonRelease=$(curl -s https://sofafeed.macadmins.io/v1/macos_data_feed.json | plutil -extract OSVersions.0.Latest.ReleaseDate raw -)
 					#echo "$jsonRelease"
@@ -8210,7 +8211,7 @@ set_display_strings_language() {
 	display_string_user_choice_install_title="${display_string_workflow_title} Requires Installation"
 	display_string_user_choice_timeout="* Please make selection in"
 	display_string_user_choice_menu_title="Defer software update for:"
-	display_string_user_choice_default_body="$dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**\n\n"
+	display_string_user_choice_default_body="$dialogUpdates\n$otherUpdates\n\nRestart Required? : ** $restartRequired ** \n\n"
 	display_string_user_choice_date_body="• Deferral available until ${display_string_deadline}.\n"
 	display_string_user_choice_count_body="$dialogUpdates\n$otherUpdates  \n\nRestart Required? : **$restartRequired**\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
 	display_string_user_choice_date_count_body="• Deferral available until ${display_string_deadline}.\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
