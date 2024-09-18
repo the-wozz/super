@@ -8817,7 +8817,7 @@ set_display_strings_language() {
 				fi
 
 			# updated 'IBM Notiifer' subtitle info
-			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n $cveTitle"
+			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n • $cveTitle"
 			
 			#fi # ends custom display setting
     ### End Woz Custom Display Settings ###
