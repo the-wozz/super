@@ -1,6 +1,6 @@
 {
-  "title": "S.U.P.E.R.M.A.N 5 Schema [com.macjutsu.super]",
-  "description": "Schema Preference settings for S.U.P.E.R.M.A.N update script. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Last update: 10/22/24/.",
+  "title": "S.U.P.E.R.M.A.N 5.0.0 Schema [com.macjutsu.super]",
+  "description": "Schema Preference settings for S.U.P.E.R.M.A.N update script. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Last update: 10/23/24/.",
   "__preferencedomain": "com.macjutsu.super",
   "options": {
     "remove_empty_properties": true
@@ -17,82 +17,87 @@
     },
     "DeferralTimerDefault": {
       "title": "Default Defer Timer",
-      "description": "The number of minutes to defer until the next update attempt if a user chooses not to update restart. It must be between 2 and 1440. Default deferral time is 60. Put X to diasble this option.",
+      "description": "The number of minutes to defer until the next update attempt if a user chooses not to update restart. It must be between 2 and 1440. Default deferral time is 60. Put X to disable this option.",
       "type": "string",
       "options": {
         "inputAttributes": {
           "placeholder": "60"
         }
-      }
+      },
+      "default": "60"
     },
     "DeferralTimerFocus": {
       "title": "Focus Defer Timer",
-      "description": "The number of minutes to defer the update restart dialog automatically if a process has prevented display sleep (for example, during an active meeting) or the user has Focus or Do Not Disturb enabled. It must be between 2 and 1440. Put X to diasble this option.",
+      "description": "The number of minutes to defer the update restart dialog automatically if a process has prevented display sleep (for example, during an active meeting) or the user has Focus or Do Not Disturb enabled. It must be between 2 and 1440.",
       "type": "string",
       "options": {
         "inputAttributes": {
           "placeholder": "60"
         }
-      }
+      },
+      "default": "60"
     },
     "DeferralTimerMenu": {
       "title": "Menu Defer Timer",
-      "description": "Display a deferral time pop-up menu in the non-deadline update restart dialog that allows the user to overide the DeferralTimerDefault time. It must be between 2 and 1440. Put X to diable this option.",
+      "description": "Display a deferral time pop-up menu in the non-deadline update restart dialog that allows the user to overide the DeferralTimerDefault time. It must be between 2 and 1440.",
       "type": "string",
       "options": {
         "inputAttributes": {
           "placeholder": "30,60,1440"
         }
-      }
+      },
+      "default": "30,60,1440"
     },
     "DeferralTimerWorkflowRelaunch": {
       "title": "Workflow Relaunch Defer Timer",
-      "description": "The number of minutes to defer if no software updates are found. It must be between 2 and 43804. Put X to diable this option.",
+      "description": "The number of minutes to defer if no software updates are found. It must be between 2 and 43804. Put X to disable this re-check. * Disabled by DEFAULT! *",
       "type": "string",
       "options": {
         "inputAttributes": {
           "placeholder": "1440"
         }
-      }
+      },
+      "default": "X"
     },
     "DeferralTimerError": {
       "title": "Error Defer Timer",
-      "description": "The number of minutes to defer if super detects an error in the workflow (for example, network or MDM connectivity issues). It must be between 2 and 1440. Default deferral time is 60. Put X to diasble this option.",
+      "description": "The number of minutes to defer if super detects an error in the workflow (for example, network or MDM connectivity issues). It must be between 2 and 1440. Default deferral time is 60.",
       "type": "string",
       "options": {
         "inputAttributes": {
           "placeholder": "60"
         }
-      }
+      },
+      "default": "60"
     },
     "DeadlineCountFocus": {
       "title": "Focus Count Deadline",
-      "description": "The maximum number of automatic deferrals allowed if the system is in user-enabled Focus/Do Not Disturb or when a process has requested that the display not go to sleep (for example, during an active meeting). Put X to diable this option.",
+      "description": "The maximum number of automatic deferrals allowed if the system is in user-enabled Focus/Do Not Disturb or when a process has requested that the display not go to sleep (for example, during an active meeting). ",
       "type": "string"
     },
     "DeadlineCountSoft": {
       "title": "Soft Count Deadline",
-      "description": "The maximum number of user selected deferrals allowed before the soft deadline automatically restarts for updates without asking the user for approval. Put X to diable this option.",
+      "description": "The maximum number of user selected deferrals allowed before the soft deadline automatically restarts for updates without asking the user for approval. ",
       "type": "string"
     },
     "DeadlineCountHard": {
       "title": "Hard Count Deadline",
-      "description": "The maximum number of user selected deferrals allowed before the computer automatically restarts for updates without asking the user for approval. Put X to diable this option.",
+      "description": "The maximum number of user selected deferrals allowed before the computer automatically restarts for updates without asking the user for approval. ",
       "type": "string"
     },
     "DeadlineDaysFocus": {
       "title": "Focus Days Deadline",
-      "description": "The maximum number of days that automatic deferrals are allowed if the system is in user-enabled Focus/Do Not Disturb or when a process has requested that the display not go to sleep (for example, during an active meeting). Put X to diable this option.",
+      "description": "The maximum number of days that automatic deferrals are allowed if the system is in user-enabled Focus/Do Not Disturb or when a process has requested that the display not go to sleep (for example, during an active meeting). ",
       "type": "string"
     },
     "DeadlineDaysSoft": {
       "title": "Soft Days Deadline",
-      "description": "The maximum number of days allowed before the soft deadline dialog. The soft deadline is an interactive update restart dialog indicating that no more deferrals are allowed. Put X to diable this option.",
+      "description": "The maximum number of days allowed before the soft deadline dialog. The soft deadline is an interactive update restart dialog indicating that no more deferrals are allowed. ",
       "type": "string"
     },
     "DeadlineDaysHard": {
       "title": "Hard Days Deadline",
-      "description": "The maximum number of days allowed before the computer automatically restarts for updates without asking the user for approval. Put X to diable this option.",
+      "description": "The maximum number of days allowed before the computer automatically restarts for updates without asking the user for approval. ",
       "type": "string"
     },
     "ScheduleZeroDateManual": {
@@ -107,7 +112,7 @@
     },
     "DeadlineDateFocus": {
       "title": "Focus Date Deadline",
-      "description": "This is the last date and time when automatic deferrals are allowed if the system is in user-enabled Focus/Do Not Disturb or when a process has requested that the display not go to sleep (for example, during an active meeting). Put X to diable this option.",
+      "description": "This is the last date and time when automatic deferrals are allowed if the system is in user-enabled Focus/Do Not Disturb or when a process has requested that the display not go to sleep (for example, during an active meeting). ",
       "type": "string",
       "options": {
         "inputAttributes": {
@@ -127,7 +132,7 @@
     },
     "DeadlineDateHard": {
       "title": "Hard Date Deadline",
-      "description": "If this date has passed, the computer restarts and udpates without asking the user for approval. Put X to diable this option.",
+      "description": "If this date has passed, the computer restarts and udpates without asking the user for approval. ",
       "type": "string",
       "options": {
         "inputAttributes": {
@@ -137,17 +142,17 @@
     },
     "DialogTimeoutUserChoice": {
       "title": "Restart or Defer Display Timeout",
-      "description": "Sets an automatic timeout for interactive update restart dialogs in seconds. The countdown of the timeout is displayed in the update restart dialog. Put X to diable this option.",
+      "description": "Sets an automatic timeout for interactive update restart dialogs in seconds. The countdown of the timeout is displayed in the update restart dialog. ",
       "type": "string"
     },
     "DialogTimeoutUserSchedule": {
         "title": "Dialog Timeout User 'Schedule'",
-        "description": "Timeout in seconds for the 'Schedule' button. Put X to diable this option.",
+        "description": "Timeout in seconds for the 'Schedule' button. ",
         "type": "string"
       },
     "DialogTimeoutSoftDeadline": {
       "title": "Soft Display Timeout",
-      "description": "Sets an automatic timeout for interactive update restart dialogs in seconds. The countdown of the timeout is displayed in the update restart dialog. Put X to diable this option.",
+      "description": "Sets an automatic timeout for interactive update restart dialogs in seconds. The countdown of the timeout is displayed in the update restart dialog. ",
       "type": "string"
     },
     "DisplayIconFile": {
@@ -166,9 +171,10 @@
       "type": "string",
       "options": {
         "inputAttributes": {
-          "placeholder": "128"
+          "placeholder": "96"
         }
-      }
+      },
+     "default": "96"
     },
     "DisplayAccessoryType": {
       "title": "Custom Display Accessory",
@@ -227,7 +233,7 @@
     },
     "DisplayHelpButtonString": {
       "title": "Help Button",
-      "description": "Plain text to display or http(s) URL link to follow for the Help Button. Put X to disable this option.",
+      "description": "Plain text to display or http(s) URL link to follow for the Help Button.",
       "type": "string",
       "options": {
         "inputAttributes": {
@@ -237,7 +243,7 @@
     },
     "DisplayWarningButtonString": {
       "title": "Warning Button",
-      "description": "Plain text or http(s) URL link to follow for the Warning Button. Put X to disable this option.",
+      "description": "Plain text or http(s) URL link to follow for the Warning Button.",
       "type": "string",
       "options": {
         "inputAttributes": {
@@ -267,7 +273,7 @@
     },
     "AuthMDMFailoverToUser": {
       "title": "User Authentication MDM Failover",
-      "description": "The MDM workflow can be unreliable due to its complexity, and super will automatically try again upon failure, however this settings allows super to try other options. For more information see https://github.com/Macjutsu/super/wiki/Apple-Silicon-Jamf-Pro-API-Credentials#user-authentication-mdm-failover. Put X to diable this option.",
+      "description": "The MDM workflow can be unreliable due to its complexity, and super will automatically try again upon failure, however this settings allows super to try other options. For more information see https://github.com/Macjutsu/super/wiki/Apple-Silicon-Jamf-Pro-API-Credentials#user-authentication-mdm-failover.",
       "type": "string",
       "options": {
         "inputAttributes": {
@@ -398,37 +404,45 @@
     },
     "InstallJamfPolicyTriggersWithoutRestarting": {
         "title": "Install Jamf Policies Without Restarting",
-        "description": "allows for installation of Jamf Pro Policies even if there are no available macOS update/upgrades. Alternately you can force this workflow when also used with the --workflow-disable-update-check option. Further, this can be combined with the new --workflow-reset-super-after-completion option for a 'temporary' workflow.",
-        "type": "boolean"
+        "description": "Allows for installation of Jamf Pro Policies even if there are no available macOS update/upgrades. Alternately you can force this workflow when also used with the --workflow-disable-update-check option. Further, this can be combined with the new --workflow-reset-super-after-completion option for a 'temporary' workflow.",
+        "type": "boolean",
+        "default": false
     },
     "WorkflowDisableUpdateCheck": {
-      "title": "Skip Apple Software Update Check (aka Daemon)",
+      "title": "Skip Apple Software Update Check (for TESTING!)",
       "description": "Skip Apple software updates, even if they are available.",
       "type": "boolean",
-      "default": "true"
+      "default": false
     },
+    "WorkflowDisableRelaunch": {
+        "title": "Disable SUPER Relaunch",
+        "description": "Disable the automatic relaunch of super after the current workflow successfully completes.",
+        "type": "boolean",
+        "default": true
+      },
     "WorkflowRestartWithoutUpdates": {
       "title": "Restart Without Updates",
-      "description": "Force a restart even if Apple software updates do not need it.",
-      "type": "boolean"
+      "description": "Force a restart even if Apple Software Updates do not need it.",
+      "type": "boolean",
+      "default": false
     },
     "AuthAskUserToSavePassword": {
       "title": "Ask User to Save Password",
       "description": "Option to save the user's password for future automatic macOS updates and upgrades.",
       "type": "boolean",
-      "default": "true"
+      "default": true
     },
     "WorkflowInstallNow": {
         "title": "'Install Now' Workflow",
         "description": "This allows you to once again define a 'permanent' install now workflow behavior. ",
         "type": "boolean",
-        "default": "false"
+        "default": false
     },
     "TestMode": {
       "title": "Test Mode",
       "description": "Mode to validate parameters, credentials, notifications, dialogs, deferrals, and deadline logic.",
       "type": "boolean",
-      "default": "true"
+      "default": false
     },
     "TestModeTimeout": {
       "title": "Test Mode Timeout",
@@ -439,7 +453,7 @@
       "title": "Verbose Mode",
       "description": "Mode to generate additional log output.",
       "type": "boolean",
-      "default": "false"
+      "default": false
     }
   }
 }
