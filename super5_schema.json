@@ -1,6 +1,6 @@
 {
-  "title": "S.U.P.E.R.M.A.N 5.0.0 Schema [com.macjutsu.super]",
-  "description": "Schema Preference settings for S.U.P.E.R.M.A.N update script. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Last update: 10/23/24/.",
+  "title": "S.U.P.E.R.M.A.N 5.0.0 CUSTOM Schema [com.macjutsu.super]",
+  "description": "Schema Preference settings for S.U.P.E.R.M.A.N update script. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Includes 'Woz Custom Settings'. Last update: 10/23/24/.",
   "__preferencedomain": "com.macjutsu.super",
   "options": {
     "remove_empty_properties": true
@@ -454,6 +454,18 @@
       "description": "Mode to generate additional log output.",
       "type": "boolean",
       "default": false
+    },
+    "wozCustomDisplay": {
+        "title" :"Woz Custom Display",
+        "description": "Shows the Apple Software Update Title information in the 'User Deferral Window'.",
+        "type": "boolean",
+        "default": true
+    },
+    "wozSofaFeedEnabled": {
+        "title" :"Woz Custom MacAdmins SOFA Feed Display",
+        "description": "REQUIRES 'Woz Custom Display ENABLED(1). This will show additional information with the 'CVE's Resolved' and 'Release Date' gathered from MacAdmins SOFA Feed into the 'User Deferral Window'.",
+        "type": "boolean",
+        "default": true
     }
   }
 }
