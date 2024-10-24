@@ -332,6 +332,7 @@
             "inputAttributes": {
               "placeholder": "5"
             }
+        }
     },
     "ScheduledInstallReminder": {
         "title": "Schedule Install Reminder Minutes",
@@ -341,6 +342,7 @@
             "inputAttributes": {
               "placeholder": "30,60,120,240"
             }
+        }
     },
     "TestStorageUpdate": {
       "title": "Test Free Space Update",
@@ -467,7 +469,5 @@
         "type": "boolean",
         "default": true
     }
-  }
-}
   }
 }
