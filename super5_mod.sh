@@ -9081,7 +9081,7 @@ set_display_strings_language() {
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
 
 			# schema setting to enable displaying of additional update information
-			if [[ "$wozCustomDisplay" -eq 1 ]]; then
+			if [[ "$wozCustomDisplay" == "true" ]]; then
 
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]]; then
                         # previous update found
@@ -9101,7 +9101,7 @@ set_display_strings_language() {
                 fi 
 
 				# 'Woz Custom SOFA Feed' (CVE and Release Date), originally created: 8/2/24
-				if [[ "$wozCustomDisplay" -eq 1 ]] && [ "$wozSofaFeedEnabled" -eq 1 ]; then
+				if [[ "$wozCustomDisplay" == "true" ]] && [[ "$wozSofaFeedEnabled" == "true" ]]; then
 
                     # MacAdmins SOFA Feed JSON URL
                     sofaFeed="https://sofafeed.macadmins.io/v1/macos_data_feed.json"
