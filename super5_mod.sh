@@ -1105,10 +1105,6 @@ get_preferences() {
 		test_storage_upgrade_managed=$(defaults read "${SUPER_MANAGED_PLIST}" TestStorageUpgrade 2>/dev/null)
 		local test_battery_level_managed
 		test_battery_level_managed=$(defaults read "${SUPER_MANAGED_PLIST}" TestBatteryLevel 2>/dev/null)
-        local wozCustomDisplay
-        wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay 2>/dev/null)
-        local wozSofaFeedEnabled
-        wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
 
 	fi
 	[[ "${verbose_mode_option}" == "TRUE" ]] && log_super "Verbose Mode: Function ${FUNCNAME[0]}: Line ${LINENO}: Managed preference file: ${SUPER_MANAGED_PLIST}:\n$(defaults read "${SUPER_MANAGED_PLIST}" 2>/dev/null)"
@@ -9079,9 +9075,14 @@ set_display_strings_language() {
             # version 1.1 | 10/23/24
 			# *** Use the line below for NOTIFICATION LINE(S)! ***:
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
+        local wozCustomDisplay
+        wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay)
+        local wozSofaFeedEnabled
+        wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled)
+
 
 			# schema setting to enable displaying of additional update information
-			if [[ "$wozCustomDisplay" == "true" ]]; then
+			if [[ "$wozCustomDisplay" -eq 1 ]]; then
 
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]]; then
                         # previous update found
@@ -9101,7 +9102,7 @@ set_display_strings_language() {
                 fi 
 
 				# 'Woz Custom SOFA Feed' (CVE and Release Date), originally created: 8/2/24
-				if [[ "$wozCustomDisplay" == "true" ]] && [[ "$wozSofaFeedEnabled" == "true" ]]; then
+				if [[ "$wozCustomDisplay" -eq 1 ]] && [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
 
                     # MacAdmins SOFA Feed JSON URL
                     sofaFeed="https://sofafeed.macadmins.io/v1/macos_data_feed.json"
