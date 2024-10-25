@@ -9072,7 +9072,7 @@ set_display_strings_language() {
     ### Woz Custom Display Variables ###
 			# modded display IBM Notifier display by Zachary 'Woz'nicki, all credit to Kevin White for S.U.P.E.R.M.A.N
 			# UPDATED Variables for SUPERMAN 5.0.0 CONFIRMED 
-            wozVersion="1.2 [10/25/24]"
+            wozVersion="1.3 [10/25/24]"
 			# *** Use the line below for NOTIFICATION LINE(S)! ***:
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
 
@@ -9085,22 +9085,9 @@ set_display_strings_language() {
 			if [[ "$wozCustomDisplay" -eq 1 ]]; then
             log_super "* Woz Custom Display: ENABLED! $wozVersion *"
 
-                if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]]; then
-                        log_super "Woz: Update FOUND!"
-                            # MDM Update
-                        if [[ -n "${macos_msu_title}" ]]; then
-                            macOSUpdates="${macos_msu_title} ${macos_msu_version}"
-                            log_super "Woz Display: MDM Update showing: ${macos_msu_title} ${macos_msu_version}."
-                            # previous update found
-                        #[[ -n "${workflow_target_previous}" ]]; then
-                        #macOSUpdates="${workflow_target}"
-                            #log_super "IBM NOTIFIER: Showing PREVIOUS update: [$workflow_target_previous]."
-                        # If there is a ${macos_installer_target} then set the remaining individual parameters. 		
-                        elif [[ "${macos_installer_target}" != "FALSE" ]]; then
-                            macOSUpdates="${macos_installer_title} ${macos_installer_version}"
-                            log_super "Woz Display: Showing LOCAL Installer: [${macos_installer_title} ${macos_installer_version}]."
-                        fi
-                    restartRequired=Yes
+                if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]] || [[ "${macos_installer_target}" != "FALSE" ]]; then
+                        macOsUpdates="${display_string_workflow_title}"
+                        restartRequired=Yes
                 fi 
 
 				# 'Woz Custom SOFA Feed' (CVE and Release Date), originally created: 8/2/24
