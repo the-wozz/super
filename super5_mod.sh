@@ -1105,10 +1105,6 @@ get_preferences() {
 		test_storage_upgrade_managed=$(defaults read "${SUPER_MANAGED_PLIST}" TestStorageUpgrade 2>/dev/null)
 		local test_battery_level_managed
 		test_battery_level_managed=$(defaults read "${SUPER_MANAGED_PLIST}" TestBatteryLevel 2>/dev/null)
-        local wozCustomDisplay
-        wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay 2>/dev/null)
-        local wozSofaFeedEnabled
-        wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
 
 	fi
 	[[ "${verbose_mode_option}" == "TRUE" ]] && log_super "Verbose Mode: Function ${FUNCNAME[0]}: Line ${LINENO}: Managed preference file: ${SUPER_MANAGED_PLIST}:\n$(defaults read "${SUPER_MANAGED_PLIST}" 2>/dev/null)"
@@ -9076,13 +9072,18 @@ set_display_strings_language() {
     ### Woz Custom Display Variables ###
 			# modded display IBM Notifier display by Zachary 'Woz'nicki, all credit to Kevin White for S.U.P.E.R.M.A.N
 			# UPDATED Variables for SUPERMAN 5.0.0 CONFIRMED 
-            # version 1.1 | 10/23/24
+            wozVersion="1.2 [10/25/24]"
 			# *** Use the line below for NOTIFICATION LINE(S)! ***:
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
 
+        local wozCustomDisplay
+        wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay 2>/dev/null)
+        local wozSofaFeedEnabled
+        wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
+
 			# schema setting to enable displaying of additional update information
 			if [[ "$wozCustomDisplay" -eq 1 ]]; then
-            log_super "* Woz Custom Display: ENABLED! *"
+            log_super "* Woz Custom Display: ENABLED! $wozVersion *"
 
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]]; then
                         # previous update found
@@ -9102,8 +9103,8 @@ set_display_strings_language() {
                 fi 
 
 				# 'Woz Custom SOFA Feed' (CVE and Release Date), originally created: 8/2/24
-				if [[ "$wozCustomDisplay" -eq 1 ]] && [ "$wozSofaFeedEnabled" -eq 1 ]; then
-                    log_super "** Woz SOFA Display: ENABLED **"
+				if [[ "$wozCustomDisplay" -eq 1 ]] && [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
+                    log_super "** Woz SOFA Feed Display: ENABLED **"
                     
                     # MacAdmins SOFA Feed JSON URL
                     sofaFeed="https://sofafeed.macadmins.io/v1/macos_data_feed.json"
