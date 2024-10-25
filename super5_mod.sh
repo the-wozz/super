@@ -9086,7 +9086,7 @@ set_display_strings_language() {
             log_super "* Woz Custom Display: ENABLED! $wozVersion *"
 
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]] || [[ "${macos_installer_target}" != "FALSE" ]]; then
-                        macOsUpdates="${display_string_workflow_title}"
+                        macOSUpdates="${display_string_workflow_title}"
                         restartRequired=Yes
                 fi 
 
