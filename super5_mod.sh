@@ -1105,6 +1105,10 @@ get_preferences() {
 		test_storage_upgrade_managed=$(defaults read "${SUPER_MANAGED_PLIST}" TestStorageUpgrade 2>/dev/null)
 		local test_battery_level_managed
 		test_battery_level_managed=$(defaults read "${SUPER_MANAGED_PLIST}" TestBatteryLevel 2>/dev/null)
+        local wozCustomDisplay
+        wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay 2>/dev/null)
+        local wozSofaFeedEnabled
+        wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
 
 	fi
 	[[ "${verbose_mode_option}" == "TRUE" ]] && log_super "Verbose Mode: Function ${FUNCNAME[0]}: Line ${LINENO}: Managed preference file: ${SUPER_MANAGED_PLIST}:\n$(defaults read "${SUPER_MANAGED_PLIST}" 2>/dev/null)"
@@ -9075,14 +9079,10 @@ set_display_strings_language() {
             # version 1.1 | 10/23/24
 			# *** Use the line below for NOTIFICATION LINE(S)! ***:
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
-        local wozCustomDisplay
-        wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay)
-        local wozSofaFeedEnabled
-        wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled)
-
 
 			# schema setting to enable displaying of additional update information
 			if [[ "$wozCustomDisplay" -eq 1 ]]; then
+            log_super "* Woz Custom Display: ENABLED! *"
 
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]]; then
                         # previous update found
@@ -9093,8 +9093,8 @@ set_display_strings_language() {
                         elif [[ -n "${macos_msu_title}" ]]; then
                             macOSUpdates="${macos_msu_title} ${macos_msu_version}"
                                 #log_super "IBM NOTIFIER: MDM Update showing: ${macos_msu_title} ${macos_msu_version}."
-                        # local update installer
-                        else
+                        # If there is a ${macos_installer_target} then set the remaining individual parameters. 		
+                        elif [[ "${macos_installer_target}" != "FALSE" ]]; then
                             macOSUpdates="${macos_installer_title} ${macos_installer_version}"
                                 #log_super "IBM NOTIFIER: Showing LOCAL Installer: [${macos_installer_title} ${macos_installer_version}]."
                         fi
@@ -9102,8 +9102,9 @@ set_display_strings_language() {
                 fi 
 
 				# 'Woz Custom SOFA Feed' (CVE and Release Date), originally created: 8/2/24
-				if [[ "$wozCustomDisplay" -eq 1 ]] && [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
-
+				if [[ "$wozCustomDisplay" -eq 1 ]] && [ "$wozSofaFeedEnabled" -eq 1 ]; then
+                    log_super "** Woz SOFA Display: ENABLED **"
+                    
                     # MacAdmins SOFA Feed JSON URL
                     sofaFeed="https://sofafeed.macadmins.io/v1/macos_data_feed.json"
                     log_super "Woz SOFA Display: Checking $sofaFeed..."
@@ -9285,7 +9286,7 @@ set_display_strings_language() {
 	display_string_user_choice_timeout="* Please make selection in"
 	display_string_user_choice_menu_title="Defer software update for:"
 	display_string_user_choice_default_body="$dialogUpdates\n$otherUpdates\n\nRestart Required? : $restartRequired\n\n"
-	display_string_user_choice_date_body="• Deferral available until ${display_string_deadline}.\n"
+	display_string_user_choice_date_body="$dialogUpdates\n$otherUpdates\n\nRestart Required? : $restartRequired\n\n• Deferral available until ${display_string_deadline}.\n"
 	display_string_user_choice_count_body="$dialogUpdates\n$otherUpdates  \n\nRestart Required? : $restartRequired\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
 	display_string_user_choice_date_count_body="• Deferral available until ${display_string_deadline}.\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
 	
