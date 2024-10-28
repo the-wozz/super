@@ -1,6 +1,6 @@
 {
   "title": "S.U.P.E.R.M.A.N 5.0.0 CUSTOM Schema [com.macjutsu.super]",
-  "description": "Schema Preference settings for S.U.P.E.R.M.A.N update script. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Includes 'Woz Custom Settings'. Last update: 10/25/24.",
+  "description": "Schema Preference settings for S.U.P.E.R.M.A.N update script. This will support macOS 15; Sequoia. This has been modified by Zachary 'Woznicki'. Includes 'Woz Custom Settings'. Last update: 10/24/24.",
   "__preferencedomain": "com.macjutsu.super",
   "options": {
     "remove_empty_properties": true
@@ -30,11 +30,7 @@
       "title": "Focus Defer Timer",
       "description": "The number of minutes to defer the update restart dialog automatically if a process has prevented display sleep (for example, during an active meeting) or the user has Focus or Do Not Disturb enabled. It must be between 2 and 1440.",
       "type": "string",
-      "options": {
-        "inputAttributes": {
-          "placeholder": "60"
-        }
-      },
+      "default": "X"
     },
     "DeferralTimerMenu": {
       "title": "Menu Defer Timer",
@@ -51,11 +47,6 @@
       "title": "Workflow Relaunch Defer Timer",
       "description": "The number of minutes to defer if no software updates are found. It must be between 2 and 43804. Put X to disable this re-check. * Disabled by DEFAULT! *",
       "type": "string",
-      "options": {
-        "inputAttributes": {
-          "placeholder": "1440"
-        }
-      },
       "default": "X"
     },
     "DeferralTimerError": {
