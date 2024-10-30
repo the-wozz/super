@@ -9079,7 +9079,7 @@ set_display_strings_language() {
         wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
 
 			# UPDATED Variables for SUPERMAN 5.0.0 CONFIRMED 
-            wozVersion="1.5 [10/30/24]"
+            wozVersion="1.6b [10/30/24]"
 			# *** Use the line below for NOTIFICATION LINE(S)! ***:
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
 
@@ -9176,7 +9176,7 @@ set_display_strings_language() {
                 fi
 
 			# updated 'IBM Notifier' subtitle info
-			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: <a href="$parsedSecurityInfo"> </a>"
+			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: <a>$parsedSecurityInfo</a>"
 			
 			fi # ends custom display setting
     ### End Woz Custom Display Settings ###
