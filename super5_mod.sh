@@ -9179,7 +9179,7 @@ set_display_strings_language() {
                 if [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
                     dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: $parsedSecurityInfo"
                  else
-                    dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n•"
+                    dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n"
                 fi
 
 			fi # ends custom display setting
