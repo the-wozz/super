@@ -9125,7 +9125,6 @@ set_display_strings_language() {
                     # parse the security info section
                     parsedSecurityInfo=$(echo "$updateInfoJSON" | sed 's/.*SecurityInfo"://; s/,".*//' | tr -d '"')
                         #echo "parsedSecurityInfo: $parsedSecurityInfo" # troubleshooting line
-                        securityLink="More Info: $parsedSecurityInfo"
 
                     # gather CVE Number information
                     parsedCVENum=$(echo "$updateInfoJSON" | sed 's/.*UniqueCVEsCount"://; s/,".*//')
@@ -9142,7 +9141,7 @@ set_display_strings_language() {
                                     cveTitle=""
                                 # normal processing here
                                 else
-                                    cveTitle="Vulnerabilitie(s) Resolved: **$parsedCVENum**"
+                                    cveTitle="• Vulnerabilitie(s) Resolved: **$parsedCVENum**"
                                 fi
                                 
                             # Converts release date to Epoch time
@@ -9177,7 +9176,7 @@ set_display_strings_language() {
                 fi
 
 			# updated 'IBM Notifier' subtitle info
-			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n • $cveTitle\n • $securityLink"
+			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: <a href="$parsedSecurityInfo"> </a>"
 			
 			fi # ends custom display setting
     ### End Woz Custom Display Settings ###
