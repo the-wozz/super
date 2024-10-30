@@ -9077,14 +9077,14 @@ set_display_strings_language() {
         local wozSofaFeedEnabled
         wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
 
-			# UPDATED Variables for SUPERMAN 5.0.0 CONFIRMED 
-            wozVersion="1.7 [10/30/24]"
-			# *** Use the line below for NOTIFICATION LINE(S)! ***:
-			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
+        # UPDATED Variables for SUPERMAN 5.0.0 CONFIRMED 
+        wozVersion="1.7 [10/30/24]"
+        # *** Use the line below for NOTIFICATION LINE(S)! ***:
+        # $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
 
         # custom Jamf Pro schema setting to enable displaying of additional update information in the IBM Notifier window
         if [[ "$wozCustomDisplay" -eq 1 ]]; then
-        log_super "* Woz Custom Display: ENABLED! $wozVersion *"
+            log_super "* Woz Custom Display: ENABLED! $wozVersion *"
 
                 # checks if any update or upgrade is available and sets the restartrequired variable to 'yes'
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]] || [[ "${macos_installer_target}" != "FALSE" ]]; then
@@ -9107,27 +9107,28 @@ set_display_strings_language() {
                     # check if we can reach SOFA Feed, then save the information to a local JSON in the SUPERMAN folder
                     log_super "Woz SOFA Display: Checking $sofaFeed..."
                     sofaCheck=$(/usr/bin/curl --retry 5 --retry-max-time 120 -sf "$sofaFeed" -o "$sofaJSON")
+                        wait
+                    # check if JSON created/exists to make sure we can proceed
+                    if [ -e $sofaJSON ]; then
+                        log_super "Woz SOFA JSON: created - $sofaJSON"
 
-                    # check if JSON exists to make sure we can proceed
-                    if [ -e $sofaJSON ]; then log_super "Woz SOFA JSON: created - $sofaJSON"; fi
+                        # gather whole section of the current update
+                        updateInfoJSON=$(cat "$sofaJSON" | sed 's/.*'"$display_string_workflow_title"'//; s/DaysSincePreviousRelease.*//')
+                            #echo "updateInfoJSON var: $updateInfoJSON" # troubleshooting line
 
-                    # gather whole section of the current update
-                    updateInfoJSON=$(cat "$sofaJSON" | sed 's/.*'"$display_string_workflow_title"'//; s/DaysSincePreviousRelease.*//')
-                        #echo "updateInfoJSON var: $updateInfoJSON" # troubleshooting line
+                        # parse the update information section down to the release date 
+                        parsedReleaseDateInfoZulu=$(echo "$updateInfoJSON" | sed 's/.*ReleaseDate"://; s/,".*//' | tr -d '"')
+                            #echo "parsedReleaseDateInfoZulu: $parsedReleaseDateInfoZulu" # troubleshooting line
 
-                    # parse the update information section down to the release date 
-                    parsedReleaseDateInfoZulu=$(echo "$updateInfoJSON" | sed 's/.*ReleaseDate"://; s/,".*//' | tr -d '"')
-                        #echo "parsedReleaseDateInfoZulu: $parsedReleaseDateInfoZulu" # troubleshooting line
+                        # parse the security info section
+                        parsedSecurityInfo=$(echo "$updateInfoJSON" | sed 's/.*SecurityInfo"://; s/,".*//' | tr -d '"')
+                            #echo "parsedSecurityInfo: $parsedSecurityInfo" # troubleshooting line
+                            securityInfo=$(echo "• More Info: $parsedSecurityInfo")
 
-                    # parse the security info section
-                    parsedSecurityInfo=$(echo "$updateInfoJSON" | sed 's/.*SecurityInfo"://; s/,".*//' | tr -d '"')
-                        #echo "parsedSecurityInfo: $parsedSecurityInfo" # troubleshooting line
-                        securityInfo=$(echo "• More Info: $parsedSecurityInfo")
-
-                    # gather CVE Number information
-                    parsedCVENum=$(echo "$updateInfoJSON" | sed 's/.*UniqueCVEsCount"://; s/,".*//')
-                        #echo "parsedCVENum: $parsedCVENum" # troubleshooting line
-                    log_super "Woz SOFA Display: Total CVE(s) resolved for update/upgrade: $parsedCVENum"
+                        # gather CVE Number information
+                        parsedCVENum=$(echo "$updateInfoJSON" | sed 's/.*UniqueCVEsCount"://; s/,".*//')
+                            #echo "parsedCVENum: $parsedCVENum" # troubleshooting line
+                        log_super "Woz SOFA Display: Total CVE(s) resolved for update/upgrade: $parsedCVENum"
 
                                 # if CVE count is less than 5, let's remove that line from the display dialog to possibly 'encourage' updating without showing a low number to the end user
                                 if [[ "$parsedCVENum" -lt 5 ]]; then
@@ -9149,12 +9150,12 @@ set_display_strings_language() {
                                 #echo "$goodDate"	#troubleshooting line
 
                             # make the display nice so the user doesn't get concerned with failed curl information LOL
-                        else
+                    else
                             log_super "*** ERROR: 'Woz Custom SOFA Feed' FAILURE! Unable to display 'Resolved CVE(s)', 'Release Date', and 'Security Information'! ***"
                             wozSofaFeedEnabled=0
-                        fi
+                    fi
 
-                    # end 'Woz Custom SOFA Feed'
+                # END 'Woz Custom SOFA Feed'
                 fi
 
 				# checks if there is any 'non-system' [Safari, XCode CLT, etc] updates are available to add to new var display
@@ -9163,7 +9164,6 @@ set_display_strings_language() {
 						for i in "${non_system_msu_titles_array[@]}"; do
 							otherUpdates=$(echo -e "• $i")
 						done
-                        log_super "Woz Custom Display: Done"
 				fi
 
                 # determines the restart value if only 'non system update' is available and no other OS updates/upgrades
@@ -9175,11 +9175,11 @@ set_display_strings_language() {
                 # updated 'IBM Notifier' subtitle info depending on settings
                 if [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
                     dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n$securityInfo"
-                 else
+                else
                     dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n"
                 fi
-
-			fi # ends custom display setting
+        # ends custom display setting
+    fi
     ### End Woz Custom Display Settings ###
 	
 	#### Useful display variables and info:
