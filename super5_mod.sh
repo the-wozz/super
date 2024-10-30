@@ -9158,7 +9158,7 @@ set_display_strings_language() {
                         fi
 
                     # end 'Woz Custom SOFA Feed'
-                    fi
+                fi
 
 				# checks if there is any 'non-system' [Safari, XCode CLT, etc] updates are available to add to new var display
 				if [[ "${non_system_msu_targets}" == "TRUE" ]]; then
@@ -9175,9 +9175,13 @@ set_display_strings_language() {
                 	restartRequired=No
                 fi
 
-			# updated 'IBM Notifier' subtitle info
-			dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: <a>$parsedSecurityInfo</a>"
-			
+                # updated 'IBM Notifier' subtitle info depending on settings
+                if [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
+                    dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: $parsedSecurityInfo"
+                 else
+                    dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n•"
+                fi
+
 			fi # ends custom display setting
     ### End Woz Custom Display Settings ###
 	
@@ -9272,9 +9276,9 @@ set_display_strings_language() {
 	display_string_user_choice_install_title="${display_string_workflow_title} Requires Installation (No Restart)"
 	display_string_user_choice_timeout="* Please make selection in"
 	display_string_user_choice_menu_title="Defer software update for:"
-	display_string_user_choice_default_body="$dialogUpdates\n$otherUpdates\n\nRestart Required? : $restartRequired\n\n"
-	display_string_user_choice_date_body="$dialogUpdates\n$otherUpdates\n\nRestart Required? : $restartRequired\n\n• Deferral available until ${display_string_deadline}.\n"
-	display_string_user_choice_count_body="$dialogUpdates\n$otherUpdates  \n\nRestart Required? : $restartRequired\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
+	display_string_user_choice_default_body="$dialogUpdates\n$otherUpdates\nRestart Required? : $restartRequired\n"
+	display_string_user_choice_date_body="$dialogUpdates\n$otherUpdates\nRestart Required? : $restartRequired\n• Deferral available until ${display_string_deadline}.\n"
+	display_string_user_choice_count_body="$dialogUpdates\n$otherUpdates\nRestart Required? : $restartRequired\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
 	display_string_user_choice_date_count_body="• Deferral available until ${display_string_deadline}.\n\n• ${display_string_deadline_count} out of ${display_string_deadline_count_maximum} deferrals remaining.\n"
 	
 	#### Language for dialog_user_schedule(), an interactive dialog allowing the user to schedule an installation.
