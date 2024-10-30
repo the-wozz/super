@@ -9070,8 +9070,7 @@ set_display_strings_language() {
 	fi
 
     ### Woz Custom Display Variables ###
-    	# modded display IBM Notifier display by Zachary 'Woz'nicki, all credit to Kevin White for S.U.P.E.R.M.A.N
-
+        # modded display IBM Notifier display by Zachary 'Woz'nicki, all credit to Kevin White for S.U.P.E.R.M.A.N
         # create variables to be used from the custom Jamf Pro schema to enable this section
         local wozCustomDisplay
         wozCustomDisplay=$(defaults read "${SUPER_MANAGED_PLIST}" wozCustomDisplay 2>/dev/null)
@@ -9079,13 +9078,13 @@ set_display_strings_language() {
         wozSofaFeedEnabled=$(defaults read "${SUPER_MANAGED_PLIST}" wozSofaFeedEnabled 2>/dev/null)
 
 			# UPDATED Variables for SUPERMAN 5.0.0 CONFIRMED 
-            wozVersion="1.6b [10/30/24]"
+            wozVersion="1.7 [10/30/24]"
 			# *** Use the line below for NOTIFICATION LINE(S)! ***:
 			# $dialogUpdates\n$otherUpdates\n\nRestart Required? : **$restartRequired**
 
-			# custom Jamf Pro schema setting to enable displaying of additional update information in the IBM Notifier window
-			if [[ "$wozCustomDisplay" -eq 1 ]]; then
-            log_super "* Woz Custom Display: ENABLED! $wozVersion *"
+        # custom Jamf Pro schema setting to enable displaying of additional update information in the IBM Notifier window
+        if [[ "$wozCustomDisplay" -eq 1 ]]; then
+        log_super "* Woz Custom Display: ENABLED! $wozVersion *"
 
                 # checks if any update or upgrade is available and sets the restartrequired variable to 'yes'
                 if [[ "${macos_msu_major_upgrade_target}" != "FALSE" ]] || [[ "${macos_msu_minor_update_target}" != "FALSE" ]] || [[ "${macos_installer_target}" != "FALSE" ]]; then
@@ -9093,7 +9092,7 @@ set_display_strings_language() {
                         restartRequired=Yes
                 fi 
 
-				# 'Woz Custom SOFA Feed' (CVE and Release Date), originally created: 8/2/24
+				# 'Woz Custom SOFA Feed', originally created: 8/2/24
 				if [[ "$wozCustomDisplay" -eq 1 ]] && [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
                     log_super "** Woz SOFA Feed Display: ENABLED **"
                     
@@ -9108,11 +9107,9 @@ set_display_strings_language() {
                     # check if we can reach SOFA Feed, then save the information to a local JSON in the SUPERMAN folder
                     log_super "Woz SOFA Display: Checking $sofaFeed..."
                     sofaCheck=$(/usr/bin/curl --retry 5 --retry-max-time 120 -sf "$sofaFeed" -o "$sofaJSON")
-                    if [ -e $sofaJSON ]; then log_super "Woz SOFA JSON: created - $sofaJSON"; fi
 
-                    # if check is no good, then bail out displaying bad information
-                    if [[ "$sofaCheck" -eq 0 ]]; then # 0 is success, anything else is no bueno!
-                        echo "Woz SOFA Display: SOFA Feed connection VALID!"
+                    # check if JSON exists to make sure we can proceed
+                    if [ -e $sofaJSON ]; then log_super "Woz SOFA JSON: created - $sofaJSON"; fi
 
                     # gather whole section of the current update
                     updateInfoJSON=$(cat "$sofaJSON" | sed 's/.*'"$display_string_workflow_title"'//; s/DaysSincePreviousRelease.*//')
@@ -9120,11 +9117,12 @@ set_display_strings_language() {
 
                     # parse the update information section down to the release date 
                     parsedReleaseDateInfoZulu=$(echo "$updateInfoJSON" | sed 's/.*ReleaseDate"://; s/,".*//' | tr -d '"')
-                        echo "parsedReleaseDateInfoZulu: $parsedReleaseDateInfoZulu" # troubleshooting line
+                        #echo "parsedReleaseDateInfoZulu: $parsedReleaseDateInfoZulu" # troubleshooting line
 
                     # parse the security info section
                     parsedSecurityInfo=$(echo "$updateInfoJSON" | sed 's/.*SecurityInfo"://; s/,".*//' | tr -d '"')
                         #echo "parsedSecurityInfo: $parsedSecurityInfo" # troubleshooting line
+                        securityInfo=$(echo "• More Info: $parsedSecurityInfo")
 
                     # gather CVE Number information
                     parsedCVENum=$(echo "$updateInfoJSON" | sed 's/.*UniqueCVEsCount"://; s/,".*//')
@@ -9152,9 +9150,8 @@ set_display_strings_language() {
 
                             # make the display nice so the user doesn't get concerned with failed curl information LOL
                         else
-                            log_super "*** ERROR: 'Woz Custom SOFA Feed' FAILURE! Unable to display 'Resolved CVE(s)' and 'Release Date'! ***"
-                            cveTitle=""
-                            goodDate=""
+                            log_super "*** ERROR: 'Woz Custom SOFA Feed' FAILURE! Unable to display 'Resolved CVE(s)', 'Release Date', and 'Security Information'! ***"
+                            wozSofaFeedEnabled=0
                         fi
 
                     # end 'Woz Custom SOFA Feed'
@@ -9171,13 +9168,13 @@ set_display_strings_language() {
 
                 # determines the restart value if only 'non system update' is available and no other OS updates/upgrades
                 if [[ "${non_system_msu_targets}" == "TRUE" ]] && [[ "${macos_msu_major_upgrade_target}" == "FALSE" ]] && [[ "${macos_msu_minor_update_target}" == "FALSE" ]]; then
-                    log_super "Woz : Setting 'restartRequired' var to No."
+                    #log_super "Woz : Setting 'restartRequired' var to No."
                 	restartRequired=No
                 fi
 
                 # updated 'IBM Notifier' subtitle info depending on settings
                 if [[ "$wozSofaFeedEnabled" -eq 1 ]]; then
-                    dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n• More Info: $parsedSecurityInfo"
+                    dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n• Release Date : **$goodDate**\n$cveTitle\n$securityInfo"
                  else
                     dialogUpdates="**macOS Update Available** :\n\n• $macOSUpdates\n"
                 fi
