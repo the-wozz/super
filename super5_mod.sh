@@ -456,7 +456,7 @@ set_defaults() {
 	readonly POWER_REQUIRED_RECHECK_SECONDS
 	
 	# The number of seconds to timeout various workflow startup processes if no progress is reported.
-	TIMEOUT_START_SECONDS=120
+	TIMEOUT_START_SECONDS=360
 	readonly TIMEOUT_START_SECONDS
 	
 	# The number of seconds to timeout the macOS 11+ softwareupdate download/prepare workflow if no progress is reported.
@@ -468,19 +468,19 @@ set_defaults() {
 	readonly TIMEOUT_non_system_msu_SECONDS
 	
 	# The number of seconds to timeout the macOS installer download workflow if no progress is reported.
-	TIMEOUT_INSTALLER_DOWNLOAD_SECONDS=300
+	TIMEOUT_INSTALLER_DOWNLOAD_SECONDS=600
 	readonly TIMEOUT_INSTALLER_DOWNLOAD_SECONDS
 	
 	# The number of seconds to timeout the macOS installation workflow if no progress is reported.
-	TIMEOUT_INSTALLER_WORKFLOW_SECONDS=600
+	TIMEOUT_INSTALLER_WORKFLOW_SECONDS=1200
 	readonly TIMEOUT_INSTALLER_DOWNLOAD_SECONDS
 	
 	# The number of seconds to timeout MDM commands if no response is reported.
-	TIMEOUT_MDM_COMMAND_SECONDS=300
+	TIMEOUT_MDM_COMMAND_SECONDS=900
 	readonly TIMEOUT_MDM_COMMAND_SECONDS
 	
 	# The number of seconds to timeout the MDM download/prepare workflow if no progress is reported.
-	TIMEOUT_MDM_WORKFLOW_SECONDS=600
+	TIMEOUT_MDM_WORKFLOW_SECONDS=900
 	readonly TIMEOUT_MDM_WORKFLOW_SECONDS
 	
 	# The default amount of time in seconds to leave test notifications and dialogs open before moving on with the test mode workflow.
@@ -9269,7 +9269,7 @@ set_display_strings_language() {
 	display_string_power_required_deadline_date_body="The deferment deadline of ${display_string_deadline} has passed.\n\nYou must connect this computer to a power supply in order to install the required macOS update."
 	
 	#### Language for dialog_user_choice(), an interactive dialog giving the user a choice to schedule, defer, or restart.
-	display_string_user_choice_restart_title="${display_string_workflow_title} Requires System Restart"
+	display_string_user_choice_restart_title="macOS Update(s) Available"
 	display_string_user_choice_install_title="${display_string_workflow_title} Requires Installation (No Restart)"
 	display_string_user_choice_timeout="* Please make selection in"
 	display_string_user_choice_menu_title="Defer software update for:"
